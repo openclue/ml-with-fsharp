@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <AssemblyName>Regression</AssemblyName>
+        <RootNamespace>Regression</RootNamespace>
+        <PackageId>Regression</PackageId>
+        <Authors>Daniel Jablonski</Authors>
+        <Company>Open Clue Sp. z o.o.</Company>
+        <Product>Regression</Product>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include=".gitignore" />
+      <None Include="Data\Data.fsx" />
+      <None Include="Linear.2D\Script.fsx" />
+      <None Include="Linear.MultiD\Script.fsx" />
+      <Content Include="Linear.MultiD\Notebook.ipynb" />
+    </ItemGroup>
+
+</Project>
