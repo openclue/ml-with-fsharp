@@ -3,7 +3,7 @@
 open FSharp.Data
 open System
 
-type Data = CsvProvider<"kc_house_data.csv", ResolutionFolder=__SOURCE_DIRECTORY__>
+type Data = CsvProvider<"day.csv", ResolutionFolder=__SOURCE_DIRECTORY__>
 
 // single observation
 type Obs = Data.Row
@@ -35,7 +35,7 @@ let shuffle (arr: 'a[]) =
     arr
 let path = $"{__SOURCE_DIRECTORY__}/../Data"
 let loadData () =
-    Data.Load($"{path}/kc_house_data.csv")
+    Data.Load($"{path}/day.csv")
 
 let splitData (rate: float) (data: Data) =
     let shuffled = data.Rows |> Seq.toArray |> shuffle
