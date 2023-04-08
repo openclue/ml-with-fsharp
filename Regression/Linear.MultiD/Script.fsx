@@ -25,57 +25,39 @@ let estimateTheta (X: Mat) (Y: Vec) =
 
 let train (f: Featurizer) (data: Obs seq) =
     let Yt, Xt =
-        data |> Seq.toList |> List.map (fun obs -> obs.Price, f obs) |> List.unzip
+        data |> Seq.toList |> List.map (fun obs -> float obs.Cnt, f obs) |> List.unzip
 
     let thetas = estimateTheta (matrix Xt) (vector Yt)
 
     thetas, (fun obs -> Vector.dot (f obs |> vector) thetas)
 
 let evaluate (model: Model) (data: Obs seq) =
-    data |> Seq.averageBy (fun obs -> abs (model obs - float obs.Price))
+    data |> Seq.averageBy (fun obs -> abs (model obs - float obs.Cnt))
 
-let f1 (obs: Obs) = [ 1.0; obs.Sqft_living ]
+let f1 (obs: Obs) = [ 1.0; obs.Instant |> float ]
 
-let f2 (obs: Obs) =
-    [ 1.0; obs.Sqft_living; obs.Lat |> float; obs.Long |> float ]
+let f2 (obs: Obs) = [ 1.0; obs.Instant; float obs.Temp ]
 
 let f3 (obs: Obs) =
-    [ 1.0
-      obs.Sqft_living
-      obs.Lat |> float
-      obs.Long |> float
-      float obs.Bathrooms
-      float obs.Bedrooms
-      float obs.Grade
-      obs.Floors |> float ]
+    [ 1.0; obs.Instant; float obs.Temp; float obs.Windspeed ]
+
 
 let f4 (obs: Obs) =
-    [ 1.0
-      obs.Sqft_living
-      float obs.Bathrooms
-      float obs.Bedrooms
-      float obs.Grade
-      float obs.Sqft_above
-      float obs.Sqft_basement
-      float obs.Sqft_living15
-      float obs.Sqft_lot
-      float obs.Sqft_lot15
-      float obs.Yr_built
-      float obs.Yr_renovated ]
+    [ 1.0; obs.Instant; float obs.Temp; float obs.Windspeed; float obs.Hum ]
 
 
 let model0 (_: Obs) =
-    allData.Rows |> Seq.averageBy (fun o -> o.Price)
+    allData.Rows |> Seq.averageBy (fun o -> float o.Cnt)
 
 let thetas1, model1 = train f1 training
 let thetas2, model2 = train f2 training
 let thetas3, model3 = train f3 training
 let thetas4, model4 = train f4 training
 
-let averagePrice = allData.Rows |> Seq.averageBy (fun o -> o.Price)
+let averageCount = allData.Rows |> Seq.averageBy (fun o -> float o.Cnt)
 
-let minPrice = allData.Rows |> Seq.minBy (fun o -> o.Price) |> (fun x -> x.Price)
-let maxPrice = allData.Rows |> Seq.maxBy (fun o -> o.Price) |> (fun x -> x.Price)
+let minPrice = allData.Rows |> Seq.minBy (fun o -> o.Cnt) |> (fun x -> x.Cnt)
+let maxPrice = allData.Rows |> Seq.maxBy (fun o -> o.Cnt) |> (fun x -> x.Cnt)
 
 evaluate model0 validation |> printfn "Model0: %A \n"
 thetas1 |> printfn "Thetas1: %A"
