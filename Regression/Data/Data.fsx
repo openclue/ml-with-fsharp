@@ -8,17 +8,13 @@ type Data = CsvProvider<"day.csv", ResolutionFolder=__SOURCE_DIRECTORY__>
 // single observation
 type Obs = Data.Row
 
-type HousePrice = float
-
-type Theta = float
-
 type Feature = float
 
 type Features = Feature list
 
 type Featurizer = Obs -> Features
 
-type Model = Obs -> HousePrice
+type Model = Obs -> float
 
 let rng = Random(314159)
 
