@@ -21,8 +21,6 @@ let estimateTheta (X: Mat) (Y: Vec) =
 
     ((XT * X) |> Inverse) * XT * Y
 
-
-
 let train (f: Featurizer) (data: Obs seq) =
     let Yt, Xt =
         data |> Seq.toList |> List.map (fun obs -> float obs.Cnt, f obs) |> List.unzip
@@ -31,8 +29,7 @@ let train (f: Featurizer) (data: Obs seq) =
 
     thetas, (fun obs -> Vector.dot (f obs |> vector) thetas)
 
-let evaluate (model: Model) (data: Obs seq) =
-    data |> Seq.averageBy (fun obs -> abs (model obs - float obs.Cnt))
+
 
 let f1 (obs: Obs) = [ 1.0; obs.Instant |> float ]
 

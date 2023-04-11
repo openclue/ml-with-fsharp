@@ -37,3 +37,6 @@ let splitData (rate: float) (data: Data) =
     let shuffled = data.Rows |> Seq.toArray |> shuffle
     let size = rate * float shuffled.Length |> int
     shuffled[..size], shuffled[size + 1 ..]
+
+let evaluate (model: Model) (data: Obs seq) =
+    data |> Seq.averageBy (fun obs -> abs (model obs - float obs.Cnt))

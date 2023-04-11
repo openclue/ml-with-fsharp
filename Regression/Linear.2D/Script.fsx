@@ -21,9 +21,6 @@ let overallCost = cost allData.Rows
 
 let model (theta0, theta1) (obs: Obs) = theta0 + theta1 * float obs.Instant
 
-let evaluateModel model =
-    validation |> Array.averageBy (fun obs -> abs (model obs - float obs.Cnt))
-
 let updateThetas (alpha: float) (theta0, theta1) (obs: Obs) =
     let x = float obs.Instant
     let y = float obs.Cnt
