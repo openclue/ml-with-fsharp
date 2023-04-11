@@ -59,14 +59,14 @@ let baselineModel =
 let thetas1 = stochasticEstimation rate (0., 0.)
 let model1 = thetas1 |> model
 
-let thetas2 = batchEstimation (pown 0.1 6) 15_000_000 training
+let thetas2 = batchEstimation (pown 0.1 6) 500_000 training
 let model2 = thetas2 |> model
 
-evaluateModel baselineModel |> printfn "Naive model average error: %f"
-thetas1 |> printfn "Model 1 thetas: %A"
-evaluateModel model1 |> printfn "Model 1 average error: %f"
-thetas2 |> printfn "Model 2 thetas: %A"
-evaluateModel model2 |> printfn "Model 2 average error: %f"
+evaluate baselineModel validation|> printfn "Baseline model average error: %f"
+
+evaluate model1 validation |> printfn "Model 1 average error: %f"
+
+evaluate model2 validation |> printfn "Model 2 average error: %f"
 
 let chart =
     allData.Rows
@@ -86,4 +86,4 @@ let model2Chart = createModelChart model2
 |> Chart.combine
 |> Chart.show
 
-model2Chart |> Chart.show
+
