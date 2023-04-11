@@ -15,6 +15,7 @@
       <Content Include=".gitignore" />
       <None Include="Data\Data.fsx" />
       <None Include="Linear.2D\Script.fsx" />
+      <None Include="Linear.2D\GradientDescent.fsx" />
       <None Include="Linear.MultiD\Script.fsx" />
       <Content Include="Linear.MultiD\Notebook.ipynb" />
     </ItemGroup>
